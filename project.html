@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, 
+initial-scale=1" /> 
+<title>Simple Weather Dashboard</title> 
+<style> 
+body { 
+font-family: Arial, sans-serif; 
+max-width: 400px; 
+margin: 2rem auto; 
+padding: 1rem; 
+background: #f0f4f8; 
+border-radius: 8px; 
+box-shadow: 0 0 10px #ccc; 
+text-align: center; 
+} 
+input, button { 
+padding: 0.5rem; 
+font-size: 1rem; 
+} 
+button { 
+cursor: pointer; 
+} 
+#output { 
+margin-top: 1.5rem; 
+font-size: 1.2rem; 
+} 
+</style> 
+</head> 
+<body> 
+<h1>🌤️ Weather Dashboard</h1> 
+<input type="text" id="cityInput" placeholder="Enter city 
+name" /> 
+<button onclick="getWeather()">Get Weather</button> 
+<div id="output"></div> 
+<script> 
+async function getWeather() { 
+const city = 
+document.getElementById('cityInput').value.trim(); 
+const output = document.getElementById('output'); 
+if (!city) { 
+output.textContent = '⚠️ Please enter a city name.'; 
+return; 
+} 
+output.textContent = '⏳ Loading...'; 
+try { 
+// Fetch weather from wttr.in in plain text format 
+const response = await 
+fetch(`https://wttr.in/${encodeURIComponent(city)}?format=3
+ `); 
+if (!response.ok) throw new Error('City not found or API 
+error.'); 
+const data = await response.text(); 
+output.textContent = data; 
+} catch (error) { 
+output.textContent = '❌ Error fetching weather data.'; 
+} 
+} 
+</script> 
+</body> 
+</html>
